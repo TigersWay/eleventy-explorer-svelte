@@ -17,7 +17,7 @@
     "not_found_handling": "single-page-application"
   },
 
-  "triggers": { "crons": ["0 20 * * sun", "0 */2 * * *"] }, // Every Sunday at 20:00 UTC = Monday 03:00 in Bangkok
+  "triggers": { "crons": ["0 20 * * sun"] }, // Every Sunday at 20:00 UTC = Monday 03:00 in Bangkok
 
   "secrets": { "required": ["CF_DEPLOY_HOOK_URL", "GH_ACCESS_TOKEN"] },
 
