@@ -1,0 +1,15 @@
+# Windows & helpers, IDE & Personal preferences
+desktop.ini
+folder.ico
+.keep/
+
+# Dependency files & directories (p/npm)
+node_modules/
+
+# Current project's specific files & directories
+public/*
+.wrangler/
+.env*
+!.env.example
+
+!.gitkeep

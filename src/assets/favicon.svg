@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" height="24">
+  <defs>
+    <style>
+      .map {stroke: #a67c52;}
+      .search {stroke: #4a3f35;}
+      @media (prefers-color-scheme: dark) {
+        .map {stroke: #c0a080;}
+        .search {stroke: #ece5d8;}
+      }
+    </style>
+  </defs>
+  <path class="bg-layer" stroke="none" d="M0 0h24v24H0z"/>
+  <path class="map" d="m11 18-2-1-6 3V7l6-3 6 3 6-3v7.5M9 4v13M15 7v5"/>
+  <path class="search" d="M15 18a3 3 0 1 0 6 0 3 3 0 1 0-6 0M20.2 20.2 22 22"/>
+</svg>

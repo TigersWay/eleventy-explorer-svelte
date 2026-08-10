@@ -1,0 +1,12 @@
+{
+  "npm.packageManager": "bun",
+  "cSpell.words": ["eleventy", "ntfy", "oklch", "shadcn", "yoctocolors"],
+  "cSpell.ignorePaths": ["public/data"],
+
+  "files.associations": {
+    "*.css": "tailwindcss",
+    "wrangler.json": "jsonc"
+  },
+
+  "html.format.wrapLineLength": 180
+}
