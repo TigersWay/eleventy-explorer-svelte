@@ -10,6 +10,8 @@
   import favicon from '$assets/favicon.svg';
   import { version } from '../package.json';
 
+  store.hydrateFromUrl();
+  store.syncToUrl();
   store.load();
 
   const formatDate = (iso) => {
