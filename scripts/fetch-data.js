@@ -116,7 +116,7 @@ const getAllRepos = async () => {
   repos.forEach((repo) => {
     // Topics
     if (repo.topics.totalCount > 30) console.log(red(`  ⚠ ${repo.nameWithOwner} has ${repo.topics.totalCount} topics!`));
-    repo.topics = repo.topics.nodes.map((o) => o.topic.name);
+    repo.topics = repo.topics.nodes.map((o) => o.topic.name).sort();
     // Languages
     if (repo.languages.totalCount > 12) console.log(red(`  ⚠ ${repo.nameWithOwner} has ${repo.languages.totalCount} languages!`));
     repo.languages = repo.languages.nodes;

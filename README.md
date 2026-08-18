@@ -9,6 +9,10 @@ Dependencies:
 
 ## CHANGELOG
 
+- **v2.1.1** 2026-08-18
+  - Sort topics alphabetically, Github doesn't offer any order (fetch-data)
+  - @tabler/icons-svelte => @tabler/icons-svelte-runes
+
 - **v2.1.0** 2026-08-11 _URL routing_
   - sv-router (just easier)
   - hydrateFromUrl
