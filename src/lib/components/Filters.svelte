@@ -10,7 +10,7 @@
   import { Button } from '$lib/components/ui/button/index.js';
   import { tick } from 'svelte';
   import { cn } from '$lib/utils.js';
-  import { IconCheck, IconSearch, IconSelector, IconX } from '@tabler/icons-svelte';
+  import { IconCheck, IconSearch, IconSelector, IconX } from '@tabler/icons-svelte-runes';
 
   const CHUNK_SIZE = 50;
 

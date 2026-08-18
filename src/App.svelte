@@ -5,7 +5,7 @@
   import Filters from '$lib/components/Filters.svelte';
   import RepoCard from '$lib/components/RepoCard.svelte';
   import Pagination from '$lib/components/Pagination.svelte';
-  import { IconBrandGithub } from '@tabler/icons-svelte';
+  import { IconBrandGithub } from '@tabler/icons-svelte-runes';
 
   import favicon from '$assets/favicon.svg';
   import { version } from '../package.json';
