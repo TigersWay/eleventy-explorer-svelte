@@ -31,6 +31,9 @@ If you like it, if you read all this, if you found a bug, please leave me a comm
 
 ## CHANGELOG
 
+- **v2.2.0** 2026-08-23 _More topics_
+  - Add eleventy/11ty-website, eleventy/11ty-template & eleventy/11ty-starter topics
+
 - **v2.1.2** 2026-08-22
   - Update README & dependencies
 

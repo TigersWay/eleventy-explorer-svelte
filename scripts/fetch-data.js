@@ -8,7 +8,7 @@
 import { Octokit } from '@octokit/core';
 import { paginateGraphQL } from '@octokit/plugin-paginate-graphql';
 import pAll from 'p-all';
-import { green, red } from 'yoctocolors';
+import { green, red, yellow } from 'yoctocolors';
 
 if (!process.env.GH_ACCESS_TOKEN) {
   console.error(red('Missing GH_ACCESS_TOKEN : add it to your .env and/or to tour workflow secrets.'));
@@ -70,7 +70,7 @@ const getRepos = async (query, attempt = 1) => {
   } catch (e) {
     if (isTransientError(e) && attempt < 4) {
       const delay = attempt * 15; // 15s, 30s, 45s
-      console.log(red(`  ⚠ "${query}" a échoué (tentative ${attempt}), retry dans ${delay}s...`));
+      console.log(red(`  ⚠ "${query}" failed (attempt ${attempt}), retry in ${delay}s...`));
       await wait(delay);
       return getRepos(query, attempt + 1);
     }
@@ -96,7 +96,11 @@ const getAllRepos = async () => {
       () => getRepos('eleventy OR 11ty in:topics stars:1..2 sort:updated'),
       () => getRepos('eleventy OR 11ty in:topics stars:0 license:MIT sort:updated'),
       () => getRepos('eleventy OR 11ty in:topics stars:0 -license:MIT sort:updated'),
-      () => getRepos('topic:eleventy-plugin -topic:eleventy -topic:11ty sort:updated')
+      // () => getRepos('topic:eleventy-plugin -topic:eleventy -topic:11ty sort:updated')
+      // v2.2.0
+      () => getRepos('eleventy-website OR 11ty-website NOT eleventy NOT 11ty in:topics sort:updated'),
+      () => getRepos('eleventy-plugin OR 11ty-plugin NOT eleventy NOT 11ty in:topics sort:updated'),
+      () => getRepos('eleventy-template OR 11ty-template OR eleventy-starter OR 11ty-starter NOT eleventy NOT 11ty in:topics sort:updated')
     ],
     // { concurrency: 1 } // It seems impossible to run them simultaneously on Netlify! The famous "second rate limit".
     { concurrency: 3 } // What about Cloudflare? It's working!! Going from +5mn to -2mn
@@ -109,7 +113,7 @@ const getAllRepos = async () => {
     return a;
   }, {});
   const duplicates = repos.filter((e) => lookup[e.nameWithOwner]);
-  if (duplicates.length) console.log(red(`--- ${duplicates.length / 2} duplicates.`));
+  if (duplicates.length) console.log(yellow(`--- ${duplicates.length / 2} duplicates.`));
 
   // And now: cleaning, flattening & sorting all these repositories
   repos = [...new Map(repos.map((repo) => [repo.nameWithOwner, repo])).values()];
@@ -139,8 +143,10 @@ const getAllRepos = async () => {
 };
 
 console.log(green('--- Get Eleventy related repositories'));
+const start = performance.now();
 const results = await getAllRepos();
-console.log(green(`--- ${results.total} repos.`));
+const seconds = (performance.now() - start) / 1000;
+console.log(green(`--- ${results.total} repos (~=${Math.round(seconds)}s).`));
 
 await Bun.write('./static/data/repos.json', JSON.stringify(results, null, 2));
 
