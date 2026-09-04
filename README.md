@@ -31,6 +31,10 @@ If you like it, if you read all this, if you found a bug, please leave me a comm
 
 ## CHANGELOG
 
+- **v2.3.0** 2026-09-04
+  - Add page 404 (too many scanners)
+  - Add robots.txt
+
 - **v2.2.0** 2026-08-23 _More topics_
   - Add eleventy/11ty-website, eleventy/11ty-template & eleventy/11ty-starter topics
 

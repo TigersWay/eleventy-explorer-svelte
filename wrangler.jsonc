@@ -14,7 +14,7 @@
 
   "assets": {
     "directory": "./public",
-    "not_found_handling": "single-page-application"
+    "not_found_handling": "404-page"
   },
 
   "triggers": { "crons": ["0 20 * * sun"] }, // Every Sunday at 20:00 UTC = Monday 03:00 in Bangkok
