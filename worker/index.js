@@ -37,7 +37,7 @@ export default {
   // Queue consumer: receives Workers builds events (started/succeeded/failed/canceled)
   async queue(batch, env, ctx) {
     const BUILD_EVENT_TAGS = {
-      'cf.workersBuilds.worker.build.succeeded': { label: 'Succeeded', tags: ['+1'] },
+      'cf.workersBuilds.worker.build.succeeded': { label: 'Successful', tags: ['+1'] },
       'cf.workersBuilds.worker.build.failed': { label: 'Failed', tags: ['skull'] },
       'cf.workersBuilds.worker.build.canceled': { label: 'Canceled', tags: ['warning'] }
     };
@@ -61,7 +61,7 @@ export default {
 
         const buildUuid = event.payload?.buildUuid ?? 'N/A';
         const branch = event.payload?.buildTriggerMetadata?.branch ?? '?';
-        const text = `Build ${info.label} (UUID: ${buildUuid}, branch: ${branch}).`;
+        const text = `${info.label} build (UUID: ${buildUuid}, branch: ${branch}).`;
 
         await notify({ message: text, tags: info.tags });
         console.log(text);
