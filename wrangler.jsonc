@@ -26,5 +26,7 @@
     "traces": { "enabled": true }
   },
 
-  "placement": { "mode": "smart" }
+  "placement": { "mode": "smart" },
+
+  "queues": { "consumers": [{ "queue": "eleventy-explorer-build-events" }] }
 }
