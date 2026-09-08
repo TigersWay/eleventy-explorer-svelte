@@ -21,7 +21,21 @@ const octokit = new (Octokit.plugin(paginateGraphQL))({
 
 const wait = (s = 1, value = s) => new Promise((resolve) => setTimeout(() => resolve(value), s * 1000));
 
-const isTransientError = (e) => [502, 503, 504].includes(e.status) || !e.status;
+// GitHub's "secondary rate limit" comes back as a 403 with a specific message
+// (NOT a 429, and NOT necessarily accompanied by the primary rate-limit headers).
+// => It needs to be treated as transient too, or a single hiccup kills the fetch and so the whole build.
+
+const isSecondaryRateLimit = (e) => e.status === 403 && /rate limit/i.test(e.response?.data?.message ?? e.message ?? '');
+
+const isTransientError = (e) => [502, 503, 504].includes(e.status) || !e.status || isSecondaryRateLimit(e);
+
+// Prefer GitHub's own 'Retry-After' header (when it gives us one), otherwise fall back
+// to an increasing delay with a little jitter so concurrent queries don't all retry simultaneously.
+const getRetryAfterSeconds = (e) => {
+  const retryAfter = e.response?.headers?.['retry-after'];
+  const parsed = retryAfter ? Number(retryAfter) : null;
+  return Number.isFinite(parsed) ? parsed : null;
+};
 
 const getRepos = async (query, attempt = 1) => {
   try {
@@ -65,12 +79,15 @@ const getRepos = async (query, attempt = 1) => {
     /* cSpell:enable */
     console.log(`  "${query}" : ${results.search.nodes.length} (repositoryCount: ${results.search.repositoryCount})`);
     if (results.search.repositoryCount >= 1000) console.log(red(`  ⚠ "${query}" should get ${results.search.repositoryCount} repos : split needed.`));
-    await wait(12); // So far, impossible to be free of the "second rate limit", but ~= 2 seconds/page seems to make it work!
+    // await wait(12); // So far, impossible to be free of the "second rate limit", but ~= 2 seconds/page seems to make it work!
     return results.search.nodes;
   } catch (e) {
-    if (isTransientError(e) && attempt < 4) {
-      const delay = attempt * 15; // 15s, 30s, 45s
-      console.log(red(`  ⚠ "${query}" failed (attempt ${attempt}), retry in ${delay}s...`));
+    if (isTransientError(e) && attempt < 6) {
+      const retryAfter = getRetryAfterSeconds(e);
+      const jitter = Math.random() * 5;
+      const delay = retryAfter ?? attempt * 20 + jitter; // 20s, 40s, 60s, 80s, 100s (+ jitter) if no 'Retry-After' header
+      const reason = isSecondaryRateLimit(e) ? 'secondary rate limit' : `status ${e.status ?? '?'}`;
+      console.log(red(`  ⚠ "${query}" failed (${reason}, attempt ${attempt}), retry in ${Math.round(delay)}s...`));
       await wait(delay);
       return getRepos(query, attempt + 1);
     }
@@ -103,7 +120,8 @@ const getAllRepos = async () => {
       () => getRepos('eleventy-template OR 11ty-template OR eleventy-starter OR 11ty-starter NOT eleventy NOT 11ty in:topics sort:updated')
     ],
     // { concurrency: 1 } // It seems impossible to run them simultaneously on Netlify! The famous "second rate limit".
-    { concurrency: 3 } // What about Cloudflare? It's working!! Going from +5mn to -2mn
+    // { concurrency: 3 } // What about Cloudflare? It's working!! Going from +5mn to -2mn
+    { concurrency: 2 } // Lowered from 3: the `search` endpoint's secondary rate limit is hit too often
   ).then((values) => values.flat());
 
   // Duplicates: it seems github GraphQL gives back increasing number of duplicate
