@@ -6,7 +6,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "eleventy-explorer",
   "main": "worker/index.js",
-  "compatibility_date": "2026-08-10",
+  "compatibility_date": "2026-09-19",
 
   "routes": [{ "pattern": "eleventy-explorer.tigersway.dev", "custom_domain": true }],
   "workers_dev": false,

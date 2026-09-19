@@ -1,6 +1,7 @@
 <script>
   import * as Card from '$lib/components/ui/card/index.js';
-  import { IconGitFork, IconStarFilled } from '@tabler/icons-svelte-runes';
+  import IconGitFork from '~icons/tabler/git-fork';
+  import IconStarFilled from '~icons/tabler/star-filled';
 
   let { repo } = $props();
 

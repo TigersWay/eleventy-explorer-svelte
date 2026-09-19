@@ -1,6 +1,6 @@
 <script>
   import { Dialog as DialogPrimitive } from 'bits-ui';
-  import { IconX } from '@tabler/icons-svelte-runes';
+  import IconX from '~icons/tabler/x';
   import { Button } from '$lib/components/ui/button/index.js';
   import { cn } from '$lib/utils.js';
   import * as Dialog from './index.js';

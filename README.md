@@ -31,6 +31,9 @@ If you like it, if you read all this, if you found a bug, please leave me a comm
 
 ## CHANGELOG
 
+- **v2.3.2** 2026-09-19
+  - Swap @tabler/icons-svelte-runes to unplugin-icons
+
 - **v2.3.1** 2026-09-08
   - Deal a little bit better with the "Secondary Rate Limit" of GitHub
   - Notification through "Cloudflare Queues" of successful/failed builds (same worker)

@@ -2,7 +2,8 @@
   import { resetMode, mode, toggleMode, systemPrefersMode } from 'mode-watcher';
   import { Button } from '$lib/components/ui/button/index.js';
 
-  import { IconMoon, IconSun } from '@tabler/icons-svelte-runes';
+  import IconMoon from '~icons/tabler/moon';
+  import IconSun from '~icons/tabler/sun';
 
   const toggle = () => {
     if (mode.current === systemPrefersMode.current) {

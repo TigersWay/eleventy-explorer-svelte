@@ -1,6 +1,6 @@
 <script>
   import { Command as CommandPrimitive } from 'bits-ui';
-  import { IconCheck } from '@tabler/icons-svelte-runes';
+  import IconCheck from '~icons/tabler/check';
   import { cn } from '$lib/utils.js';
 
   let { ref = $bindable(null), class: className, children, ...restProps } = $props();

@@ -1,6 +1,6 @@
 <script>
   import { Select as SelectPrimitive } from 'bits-ui';
-  import { IconSelector } from '@tabler/icons-svelte-runes';
+  import IconSelector from '~icons/tabler/selector';
   import { cn } from '$lib/utils.js';
 
   let { ref = $bindable(null), class: className, children, size = 'default', ...restProps } = $props();

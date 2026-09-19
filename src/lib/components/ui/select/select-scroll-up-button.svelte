@@ -1,6 +1,6 @@
 <script>
   import { Select as SelectPrimitive } from 'bits-ui';
-  import { IconChevronUp } from '@tabler/icons-svelte-runes';
+  import IconChevronUp from '~icons/tabler/chevron-up';
   import { cn } from '$lib/utils.js';
 
   let { ref = $bindable(null), class: className, ...restProps } = $props();

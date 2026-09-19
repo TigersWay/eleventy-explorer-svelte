@@ -1,6 +1,7 @@
 <script>
   import { Checkbox as CheckboxPrimitive } from 'bits-ui';
-  import { IconCheck, IconMinus } from '@tabler/icons-svelte-runes';
+  import IconCheck from '~icons/tabler/check';
+  import IconMinus from '~icons/tabler/minus';
   import { cn } from '$lib/utils.js';
 
   let { ref = $bindable(null), checked = $bindable(false), indeterminate = $bindable(false), class: className, ...restProps } = $props();

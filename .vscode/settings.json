@@ -1,6 +1,6 @@
 {
   "npm.packageManager": "bun",
-  "cSpell.words": ["eleventy", "humanstxt", "ntfy", "oklch", "robotstxt", "shadcn", "yoctocolors"],
+  "cSpell.words": ["eleventy", "humanstxt", "iconify", "ntfy", "oklch", "robotstxt", "shadcn", "yoctocolors"],
   "cSpell.ignorePaths": ["public/data"],
 
   "files.associations": {

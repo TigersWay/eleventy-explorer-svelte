@@ -1,7 +1,7 @@
 <script>
   import { Command as CommandPrimitive } from 'bits-ui';
   import * as InputGroup from '$lib/components/ui/input-group/index.js';
-  import { IconSearch } from '@tabler/icons-svelte-runes';
+  import IconSearch from '~icons/tabler/search';
   import { cn } from '$lib/utils.js';
 
   let { ref = $bindable(null), class: className, value = $bindable(''), ...restProps } = $props();

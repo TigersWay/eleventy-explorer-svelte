@@ -1,4 +1,3 @@
-import { twMerge } from 'tailwind-merge';
-import { clsx } from 'clsx';
+export { cn } from "cn";
 
-export const cn = (...inputs) => twMerge(clsx(inputs));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any

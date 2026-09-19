@@ -1,5 +1,5 @@
 <script>
-  import { IconDots } from '@tabler/icons-svelte-runes';
+  import IconDots from '~icons/tabler/dots';
   import { cn } from '$lib/utils.js';
   let { ref = $bindable(null), class: className, ...restProps } = $props();
 </script>
