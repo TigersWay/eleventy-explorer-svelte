@@ -31,6 +31,10 @@ If you like it, if you read all this, if you found a bug, please leave me a comm
 
 ## CHANGELOG
 
+- **v2.3.3** 2026-09-20
+  - Add /static/data/repos.json to .gitignore
+  - Break on error when there's repositoryCount wrong or >1000
+
 - **v2.3.2** 2026-09-19
   - Swap @tabler/icons-svelte-runes to unplugin-icons
 

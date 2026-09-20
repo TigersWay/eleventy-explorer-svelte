@@ -19,6 +19,8 @@ const octokit = new (Octokit.plugin(paginateGraphQL))({
   auth: process.env.GH_ACCESS_TOKEN
 });
 
+let repositoryCountError = false;
+
 const wait = (s = 1, value = s) => new Promise((resolve) => setTimeout(() => resolve(value), s * 1000));
 
 // GitHub's "secondary rate limit" comes back as a 403 with a specific message
@@ -79,6 +81,7 @@ const getRepos = async (query, attempt = 1) => {
     /* cSpell:enable */
     console.log(`  "${query}" : ${results.search.nodes.length} (repositoryCount: ${results.search.repositoryCount})`);
     if (results.search.repositoryCount >= 1000) console.log(red(`  ⚠ "${query}" should get ${results.search.repositoryCount} repos : split needed.`));
+    repositoryCountError ||= results.search.nodes.length != results.search.repositoryCount || results.search.repositoryCount > 1000;
     // await wait(12); // So far, impossible to be free of the "second rate limit", but ~= 2 seconds/page seems to make it work!
     return results.search.nodes;
   } catch (e) {
@@ -123,6 +126,11 @@ const getAllRepos = async () => {
     // { concurrency: 3 } // What about Cloudflare? It's working!! Going from +5mn to -2mn
     { concurrency: 2 } // Lowered from 3: the `search` endpoint's secondary rate limit is hit too often
   ).then((values) => values.flat());
+
+  if (repositoryCountError) {
+    console.error(red('--- At leat one request had an error on `repositoryCount`.'));
+    process.exit(1);
+  }
 
   // Duplicates: it seems github GraphQL gives back increasing number of duplicate
   // A sort option on the query seems to have solved that problem.

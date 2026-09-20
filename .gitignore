@@ -8,6 +8,7 @@ node_modules/
 
 # Current project's specific files & directories
 public/*
+static/data/
 .wrangler/
 .env*
 !.env.example
